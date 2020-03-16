@@ -1,6 +1,10 @@
 ---
 title: "Comparision of LuCaP and LTL extracts using ChemoSpec"
-output: html_document
+author: Jinny Sun
+date: March 16, 2020
+output: 
+  html_document:
+    toc: true
 ---
 
 # Experiment Details
@@ -12,7 +16,7 @@ Prostate Cancer PDX models of castration-resistant prostate cancer (CRPC) and ne
 
 ## Load Packages
 
-```{r}
+```{r message=F}
 library(ChemoSpec)
 library(R.utils)
 library(R.oo)
