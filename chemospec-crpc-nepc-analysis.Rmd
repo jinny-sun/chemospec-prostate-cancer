@@ -4,7 +4,7 @@ output: html_document
 ---
 
 # Experiment Details
-
+Prostate Cancer PDX models of castration-resistant prostate cancer (CRPC) and neuroendocrine prostate cancer (NEPC)
 1H presat and 13C-decoupled 1H presat spectra
 [U-13C]glucose or [U-13C]glutamine labeled for 45 min
 
@@ -37,18 +37,17 @@ Spectra <-removeSample(Spectra,rem.sam = c("L145.1-005_NEPC1_U13Cglucose_3")) #L
 sumSpectra(Spectra) #summarize data set & verify data ranges
 myt <- "Glucose 1H with PQN norm and bin.ratio=200"
 Spectra$names <- c("L145.1-001", "L145.1-002", "L70CR-003", "L77CR-007", "L77CR-009", "L77CR-010", "L93-001", "L93-002", "L93-003", "LTL313HR-005", "LTL313HR-008", "LTL313HR-010", "LTL352-007", "LTL352-008", "LTL352-010", "LTL610-002", "LTL610-004","LTL610-007")
-Spectra$groups <- revalue(Spectra$groups, c("NEPC"="t-SCNC"))
 ```
 
 ## Process Spectra
 
 The steps to process spectra include:
 
-1. 
-2.
-3. 
+1. Removing reference and solvent signals
+2. Normalize spectra using Probabalistic Quotient Normalization
+3. Bin spectra to reduce dimensionality
 
-The following code will ...
+These steps are performed using the `removeFreq`, `normSpectra`, and `binSpectra` functions.
 
 ```{r}
 Spectra.f <- removeFreq(Spectra, rem.freq = Spectra$freq > 5.8
@@ -73,8 +72,6 @@ This code plots ...
 
 ```{r}
 ### Classical & Robust PCA - outliers will contribute strongly to the variance of the entire data set ###
-#class.results <- c_pcaSpectra(tmp, choice = "noscale")
-#class.results <- c_pcaSpectra(tmp, choice = "autoscale")
 class.results <- c_pcaSpectra(tmp, choice = "Pareto")
 
 plotScores(tmp, class.results, main = myt, pcs = c(1,2), ellipse = "both", tol = 1.0, lwd = 4)
