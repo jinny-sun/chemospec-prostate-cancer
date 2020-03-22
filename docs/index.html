@@ -383,7 +383,11 @@ summary {
 
 <div id="experiment-details" class="section level1">
 <h1>Experiment Details</h1>
-<p>Prostate Cancer PDX models of castration-resistant prostate cancer (CRPC) and neuroendocrine prostate cancer (NEPC) 1H presat and 13C-decoupled 1H presat spectra [U-13C]glucose or [U-13C]glutamine labeled for 45 min</p>
+<ul>
+<li>Models used: Prostate Cancer PDX models of castration-resistant prostate cancer (CRPC) and neuroendocrine prostate cancer (NEPC)</li>
+<li>Spectra acquired: 1H presat and 13C-decoupled 1H presat spectra</li>
+<li>Labeling method: [U-13C]glucose or [U-13C]glutamine labeled for 45 min</li>
+</ul>
 </div>
 <div id="analysis" class="section level1">
 <h1>Analysis</h1>
@@ -404,54 +408,8 @@ library(plyr)</code></pre>
 </div>
 <div id="load-data" class="section level2">
 <h2>Load Data</h2>
-<p>Glucose 1H Presat</p>
-<pre class="r"><code>Spectra=files2SpectraObject(gr.crit = c(&quot;CRPC&quot;, &quot;NEPC&quot;),sep=&quot;,&quot;,freq.unit=&quot;ppm&quot;,int.unit=&quot;A.U.&quot;,desc=&quot;[U-13C]glucose labeled 1H presat&quot;,out.file=&quot;glucose_1H_data&quot;) #Convert csv files to Spectra Objects in the current directory</code></pre>
-<pre><code>## 
-## Reading 19 files...</code></pre>
-<pre><code>## 
-  |                                                                       
-  |                                                                 |   0%
-  |                                                                       
-  |===                                                              |   5%
-  |                                                                       
-  |=======                                                          |  11%
-  |                                                                       
-  |==========                                                       |  16%
-  |                                                                       
-  |==============                                                   |  21%
-  |                                                                       
-  |=================                                                |  26%
-  |                                                                       
-  |=====================                                            |  32%
-  |                                                                       
-  |========================                                         |  37%
-  |                                                                       
-  |===========================                                      |  42%
-  |                                                                       
-  |===============================                                  |  47%
-  |                                                                       
-  |==================================                               |  53%
-  |                                                                       
-  |======================================                           |  58%
-  |                                                                       
-  |=========================================                        |  63%
-  |                                                                       
-  |============================================                     |  68%
-  |                                                                       
-  |================================================                 |  74%
-  |                                                                       
-  |===================================================              |  79%
-  |                                                                       
-  |=======================================================          |  84%
-  |                                                                       
-  |==========================================================       |  89%
-  |                                                                       
-  |==============================================================   |  95%
-  |                                                                       
-  |=================================================================| 100%</code></pre>
-<pre><code>## 
-## Assigning 19 spectra to 2 groups...</code></pre>
-<pre><code>## Success!</code></pre>
+<pre class="r"><code># Glucose 1H Presat Data
+Spectra &lt;- files2SpectraObject(gr.crit = c(&quot;CRPC&quot;,&quot;NEPC&quot;),sep=&quot;,&quot;,freq.unit=&quot;ppm&quot;,int.unit=&quot;A.U.&quot;,desc=&quot;[U-13C]glucose labeled 1H presat&quot;,out.file=&quot;glucose_1H_data&quot;) #Convert csv files to Spectra Objects in the current directory</code></pre>
 <pre class="r"><code>Spectra &lt;-removeSample(Spectra,rem.sam = c(&quot;L145.1-005_NEPC1_U13Cglucose_3&quot;)) #L145.1-005 was removed as it was an extreme outlier, may be because it was measured at 318K and with 48Hz CHIRP pulse
 sumSpectra(Spectra) #summarize data set &amp; verify data ranges</code></pre>
 <pre><code>## 
@@ -537,7 +495,6 @@ tmp &lt;- binSpectra(Spectra.f, bin.ratio = 200) #.03ppm bin size</code></pre>
 </div>
 <div id="plot-spectra" class="section level2">
 <h2>Plot Spectra</h2>
-<p>This code plots …</p>
 <pre class="r"><code>### Classical &amp; Robust PCA - outliers will contribute strongly to the variance of the entire data set ###
 class.results &lt;- c_pcaSpectra(tmp, choice = &quot;Pareto&quot;)
 

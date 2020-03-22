@@ -8,9 +8,10 @@ output:
 ---
 
 # Experiment Details
-Prostate Cancer PDX models of castration-resistant prostate cancer (CRPC) and neuroendocrine prostate cancer (NEPC)
-1H presat and 13C-decoupled 1H presat spectra
-[U-13C]glucose or [U-13C]glutamine labeled for 45 min
+
+* Models used: Prostate Cancer PDX models of castration-resistant prostate cancer (CRPC) and neuroendocrine prostate cancer (NEPC)
+* Spectra acquired: 1H presat and 13C-decoupled 1H presat spectra
+* Labeling method: [U-13C]glucose or [U-13C]glutamine labeled for 45 min
 
 # Analysis
 
@@ -33,10 +34,12 @@ library(plyr)
 
 ## Load Data
 
-Glucose 1H Presat 
+```{r message=F,warning=F,error=F,results=F}
+# Glucose 1H Presat Data
+Spectra <- files2SpectraObject(gr.crit = c("CRPC","NEPC"),sep=",",freq.unit="ppm",int.unit="A.U.",desc="[U-13C]glucose labeled 1H presat",out.file="glucose_1H_data") #Convert csv files to Spectra Objects in the current directory
+```
 
 ```{r}
-Spectra=files2SpectraObject(gr.crit = c("CRPC", "NEPC"),sep=",",freq.unit="ppm",int.unit="A.U.",desc="[U-13C]glucose labeled 1H presat",out.file="glucose_1H_data") #Convert csv files to Spectra Objects in the current directory
 Spectra <-removeSample(Spectra,rem.sam = c("L145.1-005_NEPC1_U13Cglucose_3")) #L145.1-005 was removed as it was an extreme outlier, may be because it was measured at 318K and with 48Hz CHIRP pulse
 sumSpectra(Spectra) #summarize data set & verify data ranges
 myt <- "Glucose 1H with PQN norm and bin.ratio=200"
@@ -66,13 +69,7 @@ tmp <- binSpectra(Spectra.f, bin.ratio = 200) #.03ppm bin size
 sumSpectra(tmp)
 ```
 
-```{r}
-
-```
-
 ## Plot Spectra
-
-This code plots ...
 
 ```{r}
 ### Classical & Robust PCA - outliers will contribute strongly to the variance of the entire data set ###
@@ -82,23 +79,17 @@ plotScores(tmp, class.results, main = myt, pcs = c(1,2), ellipse = "both", tol =
 ```
 
 ```{r}
-
 ### Loading plots
 loadingplot <- plotLoadings(tmp, class.results, main = myt, loads = c(1, 2), tol = 0.05, lwd = 4) #how many bootstraps are needed to reach 95% explained variance
-
 ```
 
 ```{r}
 ### sPlot: Plot correlation of each frequency variable with covariance. Most influencial variables are in the upper right & lower left quadrants
 spt <- sPlotSpectra(tmp,class.results, main = myt, pc = 1, tol = 0.05, lwd = 1)
-
-
 ```
-
 
 ```{r}
 ### Scree plot
 plotScree(class.results, main = myt, lwd = 4)
-
 ```
 

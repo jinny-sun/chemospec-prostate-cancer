@@ -6,10 +6,11 @@ March 16, 2020
 
 # Experiment Details
 
-Prostate Cancer PDX models of castration-resistant prostate cancer
-(CRPC) and neuroendocrine prostate cancer (NEPC) 1H presat and
-13C-decoupled 1H presat spectra \[U-13C\]glucose or \[U-13C\]glutamine
-labeled for 45 min
+  - Models used: Prostate Cancer PDX models of castration-resistant
+    prostate cancer (CRPC) and neuroendocrine prostate cancer (NEPC)
+  - Spectra acquired: 1H presat and 13C-decoupled 1H presat spectra
+  - Labeling method: \[U-13C\]glucose or \[U-13C\]glutamine labeled for
+    45 min
 
 # Analysis
 
@@ -32,22 +33,10 @@ library(plyr)
 
 ## Load Data
 
-Glucose 1H
-Presat
-
 ``` r
-Spectra=files2SpectraObject(gr.crit = c("CRPC", "NEPC"),sep=",",freq.unit="ppm",int.unit="A.U.",desc="[U-13C]glucose labeled 1H presat",out.file="glucose_1H_data") #Convert csv files to Spectra Objects in the current directory
+# Glucose 1H Presat Data
+Spectra <- files2SpectraObject(gr.crit = c("CRPC","NEPC"),sep=",",freq.unit="ppm",int.unit="A.U.",desc="[U-13C]glucose labeled 1H presat",out.file="glucose_1H_data") #Convert csv files to Spectra Objects in the current directory
 ```
-
-    ## 
-    ## Reading 19 files...
-
-    ##   |                                                                         |                                                                 |   0%  |                                                                         |===                                                              |   5%  |                                                                         |=======                                                          |  11%  |                                                                         |==========                                                       |  16%  |                                                                         |==============                                                   |  21%  |                                                                         |=================                                                |  26%  |                                                                         |=====================                                            |  32%  |                                                                         |========================                                         |  37%  |                                                                         |===========================                                      |  42%  |                                                                         |===============================                                  |  47%  |                                                                         |==================================                               |  53%  |                                                                         |======================================                           |  58%  |                                                                         |=========================================                        |  63%  |                                                                         |============================================                     |  68%  |                                                                         |================================================                 |  74%  |                                                                         |===================================================              |  79%  |                                                                         |=======================================================          |  84%  |                                                                         |==========================================================       |  89%  |                                                                         |==============================================================   |  95%  |                                                                         |=================================================================| 100%
-
-    ## 
-    ## Assigning 19 spectra to 2 groups...
-
-    ## Success!
 
 ``` r
 Spectra <-removeSample(Spectra,rem.sam = c("L145.1-005_NEPC1_U13Cglucose_3")) #L145.1-005 was removed as it was an extreme outlier, may be because it was measured at 318K and with 48Hz CHIRP pulse
@@ -149,9 +138,6 @@ sumSpectra(tmp)
 
 ## Plot Spectra
 
-This code plots
-…
-
 ``` r
 ### Classical & Robust PCA - outliers will contribute strongly to the variance of the entire data set ###
 class.results <- c_pcaSpectra(tmp, choice = "Pareto")
@@ -159,25 +145,25 @@ class.results <- c_pcaSpectra(tmp, choice = "Pareto")
 plotScores(tmp, class.results, main = myt, pcs = c(1,2), ellipse = "both", tol = 1.0, lwd = 4)
 ```
 
-![](chemospec-crpc-nepc-analysis_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](chemospec-prostate-cancer-analysis_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 ``` r
 ### Loading plots
 loadingplot <- plotLoadings(tmp, class.results, main = myt, loads = c(1, 2), tol = 0.05, lwd = 4) #how many bootstraps are needed to reach 95% explained variance
 ```
 
-![](chemospec-crpc-nepc-analysis_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+![](chemospec-prostate-cancer-analysis_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 ``` r
 ### sPlot: Plot correlation of each frequency variable with covariance. Most influencial variables are in the upper right & lower left quadrants
 spt <- sPlotSpectra(tmp,class.results, main = myt, pc = 1, tol = 0.05, lwd = 1)
 ```
 
-![](chemospec-crpc-nepc-analysis_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+![](chemospec-prostate-cancer-analysis_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
 ``` r
 ### Scree plot
 plotScree(class.results, main = myt, lwd = 4)
 ```
 
-![](chemospec-crpc-nepc-analysis_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+![](chemospec-prostate-cancer-analysis_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
